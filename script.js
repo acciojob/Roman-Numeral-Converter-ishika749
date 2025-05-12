@@ -1,15 +1,21 @@
 function convertToRoman(num) {
-    // Handle 0 case (not typically represented in Roman numerals)
+    // Handle 0 case
     if (num === 0) return '';
     
-    // Define Roman numeral symbols and their values
+    // Define all Roman numeral symbols including subtractive cases
     const romanSymbols = [
         ['M', 1000],
+        ['CM', 900],  // M - C
         ['D', 500],
+        ['CD', 400],  // D - C
         ['C', 100],
+        ['XC', 90],   // C - X
         ['L', 50],
+        ['XL', 40],   // L - X
         ['X', 10],
+        ['IX', 9],    // X - I
         ['V', 5],
+        ['IV', 4],    // V - I
         ['I', 1]
     ];
     
@@ -19,28 +25,8 @@ function convertToRoman(num) {
     for (let [symbol, value] of romanSymbols) {
         // While the number is greater than or equal to the current value
         while (num >= value) {
-            // Add the symbol to result and subtract the value from num
             result += symbol;
             num -= value;
-        }
-        
-        // Handle subtractive cases (like IV, IX, XL, etc.)
-        // We need to check for subtractive combinations
-        const subtractiveCases = [
-            ['CM', 900],  // M - C
-            ['CD', 400],  // D - C
-            ['XC', 90],   // C - X
-            ['XL', 40],   // L - X
-            ['IX', 9],    // X - I
-            ['IV', 4]     // V - I
-        ];
-        
-        for (let [subSymbol, subValue] of subtractiveCases) {
-            if (num >= subValue) {
-                result += subSymbol;
-                num -= subValue;
-                break; // Only one subtractive case can apply at a time
-            }
         }
     }
     
