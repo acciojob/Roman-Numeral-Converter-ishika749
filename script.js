@@ -24,15 +24,9 @@ function convertToRoman(num) {
     return result;
 }
 
-// Example usage:
+// Example usage
 console.log(convertToRoman(14));   // Output: XIV
 console.log(convertToRoman(798));  // Output: DCCXCVIII
-//your code here
-
-}
-// You can test your code by running the above function and printing it to console by pressing the run button at the top. To run it with input 36, uncomment the following line
-
-// console.log(convertToRoman(36));
 
 
 
