@@ -1,6 +1,9 @@
 function convertToRoman(num) {
+    // Handle 0 case (not typically represented in Roman numerals)
+    if (num === 0) return '';
+    
     // Define Roman numeral symbols and their values
-    const symbols = [
+    const romanSymbols = [
         ['M', 1000],
         ['D', 500],
         ['C', 100],
@@ -10,28 +13,33 @@ function convertToRoman(num) {
         ['I', 1]
     ];
     
-    // Handle edge case of 0
-    if (num === 0) return '';
-    
     let result = '';
     
     // Iterate through each symbol
-    for (let [symbol, value] of symbols) {
-        // While the number is greater than or equal to current value
+    for (let [symbol, value] of romanSymbols) {
+        // While the number is greater than or equal to the current value
         while (num >= value) {
-            // Add the symbol to result and subtract value from num
+            // Add the symbol to result and subtract the value from num
             result += symbol;
             num -= value;
         }
         
         // Handle subtractive cases (like IV, IX, XL, etc.)
-        // Check if we can use subtractive notation with the next smaller value
-        for (let [nextSymbol, nextValue] of symbols) {
-            // For cases like IV (4), IX (9), XL (40), XC (90), CD (400), CM (900)
-            if (value - nextValue >= num && num >= value - nextValue) {
-                result += nextSymbol + symbol;
-                num -= (value - nextValue);
-                break;
+        // We need to check for subtractive combinations
+        const subtractiveCases = [
+            ['CM', 900],  // M - C
+            ['CD', 400],  // D - C
+            ['XC', 90],   // C - X
+            ['XL', 40],   // L - X
+            ['IX', 9],    // X - I
+            ['IV', 4]     // V - I
+        ];
+        
+        for (let [subSymbol, subValue] of subtractiveCases) {
+            if (num >= subValue) {
+                result += subSymbol;
+                num -= subValue;
+                break; // Only one subtractive case can apply at a time
             }
         }
     }
